@@ -30,20 +30,29 @@ t12 = int(0.5//dt)
 t34 = int(0.75//dt)
 avg_D = np.zeros(4)
 
-plt.figure(figsize=(10, 6))
+plt.figure(1)
+plt.title('Euler-Maruyama Simulations of SDE')
+plt.xlabel('Time')
+plt.ylabel('$X_t$')
+plt.legend()
+plt.figure(2)
+plt.title('Brownian Motion')
+plt.xlabel('Time')
+plt.ylabel('$X_t$')
+plt.legend()
 for i in range(20):
     t, X, Bt = euler(alpha, beta, min_t, max_t, dt, X0)
+    plt.figure(1)
     plt.plot(t, X)
+    plt.figure(2)
+    plt.plot(t, Bt)
     print(f'X_{1/4}: {X[t14]}, X_{1/2}: {X[t12]}, X_{3/4}: {X[t34]}, X_{1}: {X[-1]}')
     print(f'B_{1/4}: {Bt[t14]}, B_{1/2}: {Bt[t12]}, B_{3/4}: {Bt[t34]}, B_{1}: {Bt[-1]}')
     avg_D[0] += X[t14]- Bt[t14]
     avg_D[1] += X[t12]- Bt[t12]
     avg_D[2] += X[t34]- Bt[t34]
     avg_D[3] += X[-1] - Bt[-1]
-plt.title('Euler-Maruyama Simulations of SDE')
-plt.xlabel('Time')
-plt.ylabel('$X_t$')
-plt.legend()
+
 plt.show()
 
 print(f'Average X_t-B_t at t=1/4: {avg_D[0]/20}, at 1/2: {avg_D[1]/20}, at 3/4: {avg_D[2]/20}, at 1: {avg_D[3]/20}')
